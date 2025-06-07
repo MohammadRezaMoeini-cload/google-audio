@@ -1,0 +1,35 @@
+<!--
+Copyright 2016 Google Inc.
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+-->
+{% extends 'base.html' %}
+
+{# Prevent the helper panel from appearing by overriding it. #}
+{% block helperPanelContainer %}{% endblock helperPanelContainer %}
+
+{% block mainContent %}
+
+<h1>Give us input.</h1>
+
+<p>
+  Please email us directly: <a href='mailto:davidfauxfireflies@gmail.com'>davidfauxfireflies@gmail.com</a>.
+</p>
+
+<p>
+  We welcome negative and positive input. And hellos.
+</p>
+<!-- 
+<iframe class='pageEmbed' src='https://docs.google.com/forms/d/1kMF1yS4NTnFp43w3FXaFM3p4CT73Tdr3ioW113eOfB8/viewform?usp=send_form'>
+</iframe> -->
+{% endblock mainContent %}

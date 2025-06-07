@@ -1,0 +1,45 @@
+/**
+ * Copyright 2016 Google Inc.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+/** CSS for the recording time display. */
+
+@def TIME_RECORDING_SCALE scale(1,1.2);
+@def GENERAL_HEIGHT 40px;
+@def VERTICALLY_CENTERING_TRANSFORM translate(0, -50%);
+@def RECORDING_TIME_FONT_SIZE 28px;
+
+.defaultRecordingTimeDisplay {
+  background: linear-gradient(to bottom,rgba(230,240,163,1) 0%,rgba(210,230,56,1) 50%,rgba(195,216,37,1) 51%,rgba(219,240,67,1) 100%);
+  border: 1px solid #000;
+  border-radius: 5px;
+  color: #111;
+  display: inline-block;
+  height: GENERAL_HEIGHT;
+  overflow: hidden;
+  padding: 0 5px;
+  position: relative;
+}
+
+.recordingTimeDisplayText {
+  font-family: courier, monospace;
+  font-size: RECORDING_TIME_FONT_SIZE;
+  font-weight: 100;
+  height: RECORDING_TIME_FONT_SIZE;
+  line-height: RECORDING_TIME_FONT_SIZE;
+  position: relative;
+  top: 50%;
+  transform: VERTICALLY_CENTERING_TRANSFORM;
+  -webkit-transform: VERTICALLY_CENTERING_TRANSFORM; 
+}
