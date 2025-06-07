@@ -51,6 +51,16 @@ audioCat.audio.AudioContextManager = function() {
       AudioBuffer.prototype['webkitCopyToChannel'];
 };
 
+/**
+ * Resumes the main audio context if it was created in the suspended state.
+ * Browsers often require a user interaction before playback can begin.
+ */
+audioCat.audio.AudioContextManager.prototype.resume = function() {
+  if (this.audioContext_.state == 'suspended' &&
+      typeof this.audioContext_.resume == 'function') {
+    this.audioContext_.resume();
+  }
+};
 
 /** @typedef {!OfflineAudioContext} */
 audioCat.audio.AudioContextManager.NonNullOfflineAudioContext;
