@@ -102,6 +102,7 @@ goog.inherits(
  */
 audioCat.audio.record.MediaRecordManager.prototype.
     handleDefaultRecordingReady_ = function() {
+  this.audioContextManager_.resume();    
   this.readyForDefaultRecording_ = true;
   this.dispatchEvent(audioCat.audio.record.Event.READY_FOR_DEFAULT_RECORDING);
 };
@@ -120,7 +121,7 @@ audioCat.audio.record.MediaRecordManager.prototype.createDefaultRecordingJob =
   if (!this.readyForDefaultRecording_) {
     throw 1; // Job recording created while not ready yet.
   }
-
+this.audioContextManager_.resume();
   var recordingJob = new audioCat.audio.record.RecordingJob(
       this.idGenerator_, this.audioContextManager_,
       /** @type {!MediaStream} */ (
