@@ -80,11 +80,17 @@ audioCat.audio.record.MediaSourceObtainer.prototype.obtainDefaultAudioStream =
   if (this.supportDetector_.getRecordingSupported()) {
     // Only obtain a media stream if the browser supports recording.
     var self = this;
-    navigator.getUserMedia({
-        'audio': true
-      },
-      goog.bind(this.handleDefaultAudioStream_, self),
-      goog.bind(this.handleStreamObtainingError_, self));
+   if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
+      navigator.mediaDevices.getUserMedia({'audio': true}).then(
+          goog.bind(this.handleDefaultAudioStream_, self),
+          goog.bind(this.handleStreamObtainingError_, self));
+    } else {
+      navigator.getUserMedia({
+          'audio': true
+        },
+        goog.bind(this.handleDefaultAudioStream_, self),
+        goog.bind(this.handleStreamObtainingError_, self));
+    }
   }
 };
 
