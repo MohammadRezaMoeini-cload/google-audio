@@ -65,16 +65,25 @@ audioCat.utility.support.SupportDetector = function(domHelper) {
    */
   this.webAudioApiSupported_ = !!goog.global.AudioContext;
 
-  // Detect support for recording through getUserMedia.
+  // Detect support for recording through getUserMedia. Modern browsers expose
+  // navigator.mediaDevices.getUserMedia which returns a promise. Create a
+  // wrapper so the rest of the code can rely on navigator.getUserMedia.
+  
   navigator.getUserMedia = navigator.getUserMedia ||
       navigator.webkitGetUserMedia ||
-      navigator.mozGetUserMedia;
+      navigator.mozGetUserMedia ||
+      (navigator.mediaDevices && navigator.mediaDevices.getUserMedia?
+          function(constraints, successCb, errorCb) {
+            navigator.mediaDevices.getUserMedia(constraints).then(
+                successCb, errorCb);
+          }: null);
 
   /**
    * Whether getUserMedia is supported.
    * @private {boolean}
    */
-  this.getUserMediaSupported_ = !!navigator.getUserMedia;
+  this.getUserMediaSupported_ = !!(navigator.mediaDevices &&
+      navigator.mediaDevices.getUserMedia) || !!navigator.getUserMedia;
 
   /**
    * Whether media stream source nodes are supported.
