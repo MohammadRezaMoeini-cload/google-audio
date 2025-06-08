@@ -116,7 +116,7 @@ audioCat.action.record.ToggleDefaultRecordAction.prototype.doAction =
                 }
               }, false, this);
         }
-      }
+      }, this);
    }
         
 
