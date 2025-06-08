@@ -18,6 +18,7 @@ goog.provide('audioCat.audio.record.MediaSourceObtainer');
 goog.require('audioCat.audio.record.Event');
 goog.require('audioCat.audio.record.ExceptionType');
 goog.require('audioCat.utility.EventTarget');
+goog.require('audioCat.audio.AudioContextManager');
 goog.require('goog.asserts');
 
 
@@ -33,7 +34,8 @@ goog.require('goog.asserts');
  */
 audioCat.audio.record.MediaSourceObtainer = function(
     idGenerator,
-    supportDetector) {
+    supportDetector,
+    audioContextManager) {
   goog.base(this);
 
   /**
@@ -47,6 +49,13 @@ audioCat.audio.record.MediaSourceObtainer = function(
    */
   this.defaultMediaAudioStream_ = null;
 
+      /**
+   * Manages the main audio context so it can be resumed once permission is
+   * granted.
+   * @private {!audioCat.audio.AudioContextManager}
+   */
+  this.audioContextManager_ = audioContextManager;
+    
   // If recording is supported, we should have a getUserMedia method.
   // For implications, not p or q is the same thing as if p, then q.
   goog.asserts.assert(
@@ -87,6 +96,8 @@ audioCat.audio.record.MediaSourceObtainer.prototype.obtainDefaultAudioStream =
 audioCat.audio.record.MediaSourceObtainer.prototype.handleDefaultAudioStream_ =
     function(mediaStream) {
   this.defaultMediaAudioStream_ = mediaStream;
+  // Resume audio output now that the user has granted access.
+  this.audioContextManager_.resume();
   // At this point, the default audio media stream is defined for sure.
   this.dispatchEvent(audioCat.audio.record.Event.DEFAULT_AUDIO_STREAM_OBTAINED);
 };
