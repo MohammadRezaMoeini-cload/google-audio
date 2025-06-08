@@ -80,8 +80,8 @@ audioCat.audio.record.MediaSourceObtainer.prototype.obtainDefaultAudioStream =
   if (this.supportDetector_.getRecordingSupported()) {
     // Only obtain a media stream if the browser supports recording.
     var self = this;
-   if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
-      navigator.mediaDevices.getUserMedia({'audio': true}).then(
+   if (navigator['mediaDevices'] && navigator['mediaDevices']['getUserMedia']) {
+      navigator['mediaDevices'].getUserMedia({'audio': true}).then(
           goog.bind(this.handleDefaultAudioStream_, self),
           goog.bind(this.handleStreamObtainingError_, self));
     } else {
@@ -91,7 +91,7 @@ audioCat.audio.record.MediaSourceObtainer.prototype.obtainDefaultAudioStream =
         goog.bind(this.handleDefaultAudioStream_, self),
         goog.bind(this.handleStreamObtainingError_, self));
     }
-  }
+  }   
 };
 
 /**
