@@ -72,12 +72,11 @@ audioCat.utility.support.SupportDetector = function(domHelper) {
   navigator.getUserMedia = navigator.getUserMedia ||
       navigator.webkitGetUserMedia ||
       navigator.mozGetUserMedia ||
-      (mediaDevices && mediaDevices['getUserMedia'] ?
+      (navigator['mediaDevices'] && navigator['mediaDevices']['getUserMedia'] ?
           function(constraints, successCb, errorCb) {
-            mediaDevices.getUserMedia(constraints).then(
+            navigator['mediaDevices'].getUserMedia(constraints).then(
                 successCb, errorCb);
           }: null);
-
   /**
    * Whether getUserMedia is supported.
    * @private {boolean}
