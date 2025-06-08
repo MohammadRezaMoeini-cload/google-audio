@@ -75,9 +75,11 @@ audioCat.audio.AudioContextManager.prototype.playBeep = function(opt_duration) {
   var gain = this.audioContext_.createGain();
   oscillator.connect(gain);
   gain.connect(this.audioContext_.destination);
-  oscillator.start();
+  // Provide an explicit start time for Closure externs and clean up after
+  // the tone finishes playing.
+  oscillator.start(this.audioContext_.currentTime);
   oscillator.stop(this.audioContext_.currentTime + duration);
-  oscillator.onended = function() {
+  oscillator['onended'] = function(e) {
     oscillator.disconnect();
     gain.disconnect();
   };
