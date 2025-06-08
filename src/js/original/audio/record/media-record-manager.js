@@ -121,7 +121,9 @@ audioCat.audio.record.MediaRecordManager.prototype.createDefaultRecordingJob =
   if (!this.readyForDefaultRecording_) {
     throw 1; // Job recording created while not ready yet.
   }
+        
 this.audioContextManager_.resume();
+        
   var recordingJob = new audioCat.audio.record.RecordingJob(
       this.idGenerator_, this.audioContextManager_,
       /** @type {!MediaStream} */ (
