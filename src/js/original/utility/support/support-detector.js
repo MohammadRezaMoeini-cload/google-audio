@@ -82,7 +82,7 @@ audioCat.utility.support.SupportDetector = function(domHelper) {
    * @private {boolean}
    */
   this.getUserMediaSupported_ = !!(navigator['mediaDevices'] &&
-      navigator['mediaDevices']['getUserMedia']) || !!navigator.getUserMedia;
+      navigator['mediaDevices']['getUserMedia']) || !!navigator.getUserMedia;ia;
 
   /**
    * Whether media stream source nodes are supported.
