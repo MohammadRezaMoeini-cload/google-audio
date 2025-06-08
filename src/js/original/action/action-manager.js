@@ -218,7 +218,8 @@ audioCat.action.ActionManager = function(
           mediaRecordManager,
           playManager,
           messageManager,
-          prefManager);
+          prefManager,
+          audioContextManager);
   actionMap[audioCat.action.ActionType.TOGGLE_SIGNATURE_TIME_GRID] =
       new audioCat.action.track.ToggleSignatureTimeGridAction(
           timeDomainScaleManager,
