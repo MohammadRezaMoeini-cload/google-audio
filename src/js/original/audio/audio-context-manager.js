@@ -56,8 +56,10 @@ audioCat.audio.AudioContextManager = function() {
  * Browsers often require a user interaction before playback can begin.
  */
 audioCat.audio.AudioContextManager.prototype.resume = function() {
-  if (this.audioContext_.state == 'suspended' &&
-      typeof this.audioContext_.resume == 'function') {
+  // Some browsers start the AudioContext in a suspended state and require
+  // calling resume() after a user interaction. Older Closure externs do not
+  // define the 'state' property, so only check that the method exists.
+  if (typeof this.audioContext_.resume == 'function') {
     this.audioContext_.resume();
   }
 };
