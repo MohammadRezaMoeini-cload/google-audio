@@ -172,8 +172,11 @@ audioCat.audio.record.RecordingJob.prototype.stop =
 
   // Create a new audio buffer.
   var numberOfChannels = this.numberOfChannels_;
+  // If no audio was captured, fall back to the context's sample rate.
+  var sampleRate = this.sampleRate_ ||
+      this.audioContextManager_.getSampleRate();
   var newAudioBuffer = this.audioContextManager_.createEmptyAudioBuffer(
-      numberOfChannels, this.totalLengthInSamples_, this.sampleRate_);
+      numberOfChannels, this.totalLengthInSamples_, sampleRate);
 
   // Piece together the lists into that single audio buffer.
   var bufferData = this.bufferData_;
