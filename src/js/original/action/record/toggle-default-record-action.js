@@ -92,45 +92,33 @@ audioCat.action.record.ToggleDefaultRecordAction.prototype.doAction =
       this.recordingJob_ = null;
       this.messageManager_.issueMessage('Recording ended.');
     } else {
-      // Begin recording.
-      // Possibly play audio here.
-      if (prefManager.getPlayWhileRecording()) {
-        if (playManager.getPlayState()) {
-          if (prefManager.getPlaceNewRecordingAtBeginning()) {
-            playManager.pause();
-          }
-        }
-
-        // Set the play time to 0 before playing if we're recording from start.
+       // Begin recording after a short countdown. Start playing only after the
+      // countdown so the play time does not advance prematurely.
+      var startRecording = goog.bind(function() {
         if (prefManager.getPlaceNewRecordingAtBeginning()) {
           playManager.setTime(0);
         }
-        if (!playManager.getPlayState()) {
-          // We could have paused earlier, but might already be playing.
-          playManager.play();
-        }
-      }
-
-      if (playManager.getPlayState()) {
-        // If the user ever pauses, stop recording too to avoid confusion.
-        playManager.listenOnce(audioCat.audio.play.events.PAUSED,
-            function() {
-              if (this.recordingJob_) {
-                // We are recording. Stop after the pause.
-                this.doAction();
-              }
-            }, false, this);
-      }
-
-      // Start a new recording.
-      var sectionBeginTime = prefManager.getPlaceNewRecordingAtBeginning() ?
-          0: playManager.getTime();
-      var startRecording = goog.bind(function() {
+        var sectionBeginTime = prefManager.getPlaceNewRecordingAtBeginning() ?
+            0: playManager.getTime();
         this.recordingJob_ = mediaRecordManager.createDefaultRecordingJob(
             prefManager.getChannelsForRecording(), sectionBeginTime);
         this.recordingJob_.start();
         this.messageManager_.issueMessage('Now recording.');
-      }, this);
+        if (prefManager.getPlayWhileRecording()) {
+          if (!playManager.getPlayState()) {
+            playManager.play();
+          }
+          playManager.listenOnce(audioCat.audio.play.events.PAUSED,
+              function() {
+                if (this.recordingJob_) {
+                  // We are recording. Stop after the pause.
+                  this.doAction();
+                }
+              }, false, this);
+        }
+      }
+   }, this);
+        
 
        // Display a numeric countdown before starting to record. A short beep
       // plays after the countdown completes.
