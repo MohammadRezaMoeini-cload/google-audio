@@ -64,6 +64,25 @@ audioCat.audio.AudioContextManager.prototype.resume = function() {
   }
 };
 
+/**
+ * Plays a short beep sound using the main AudioContext.
+ * @param {number=} opt_duration Duration of the beep in seconds. Defaults to
+ *     0.1 seconds.
+ */
+audioCat.audio.AudioContextManager.prototype.playBeep = function(opt_duration) {
+  var duration = opt_duration || 0.1;
+  var oscillator = this.audioContext_.createOscillator();
+  var gain = this.audioContext_.createGain();
+  oscillator.connect(gain);
+  gain.connect(this.audioContext_.destination);
+  oscillator.start();
+  oscillator.stop(this.audioContext_.currentTime + duration);
+  oscillator.onended = function() {
+    oscillator.disconnect();
+    gain.disconnect();
+  };
+};
+
 /** @typedef {!OfflineAudioContext} */
 audioCat.audio.AudioContextManager.NonNullOfflineAudioContext;
 
