@@ -132,14 +132,21 @@ audioCat.action.record.ToggleDefaultRecordAction.prototype.doAction =
         this.messageManager_.issueMessage('Now recording.');
       }, this);
 
-       // Play a short beep countdown before starting to record.
+       // Display a numeric countdown before starting to record. A short beep
+      // plays after the countdown completes.
       var count = 3;
+      var messageId = null;
       var countdown = goog.bind(function() {
+        if (messageId != null) {
+          this.messageManager_.hideMessage(messageId);
+        }
         if (count > 0) {
-          this.audioContextManager_.playBeep();
+          messageId = this.messageManager_.issueMessage(String(count));
           count--;
-          goog. global.setTimeout(countdown, 1000);
+          goog.global.setTimeout(countdown, 1000);
         } else {
+          this.audioContextManager_.playBeep();
+          messageId = null;
           startRecording();
         }
       }, this);
