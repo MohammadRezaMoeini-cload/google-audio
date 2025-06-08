@@ -117,7 +117,7 @@ audioCat.action.record.ToggleDefaultRecordAction.prototype.doAction =
               }, false, this);
         }
       }
-   }, this);
+   }
         
 
        // Display a numeric countdown before starting to record. A short beep
