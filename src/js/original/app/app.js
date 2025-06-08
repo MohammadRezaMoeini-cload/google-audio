@@ -313,7 +313,7 @@ audioCat.app.App = function(domHelper, project) {
   // Manages recording.
   var mediaSourceObtainer = new audioCat.audio.record.MediaSourceObtainer(
       idGenerator,
-      supportDetector
+      supportDetector,
       audioContextManager);
   var recordManager = new audioCat.audio.record.MediaRecordManager(
       audioContextManager,
