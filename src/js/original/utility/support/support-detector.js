@@ -76,13 +76,13 @@ audioCat.utility.support.SupportDetector = function(domHelper) {
           function(constraints, successCb, errorCb) {
             navigator['mediaDevices'].getUserMedia(constraints).then(
                 successCb, errorCb);
-          }: null);
+          } : null);
   /**
    * Whether getUserMedia is supported.
    * @private {boolean}
    */
-  this.getUserMediaSupported_ = !!(navigator.mediaDevices &&
-      navigator.mediaDevices.getUserMedia) || !!navigator.getUserMedia;
+  this.getUserMediaSupported_ = !!(navigator['mediaDevices'] &&
+      navigator['mediaDevices']['getUserMedia']) || !!navigator.getUserMedia;
 
   /**
    * Whether media stream source nodes are supported.
