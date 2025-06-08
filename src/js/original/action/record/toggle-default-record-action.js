@@ -124,14 +124,26 @@ audioCat.action.record.ToggleDefaultRecordAction.prototype.doAction =
 
       // Start a new recording.
       var sectionBeginTime = prefManager.getPlaceNewRecordingAtBeginning() ?
-          0 : playManager.getTime();
-      this.recordingJob_ = mediaRecordManager.createDefaultRecordingJob(
-          prefManager.getChannelsForRecording(), sectionBeginTime);
+          0: playManager.getTime();
+      var startRecording = goog.bind(function() {
+        this.recordingJob_ = mediaRecordManager.createDefaultRecordingJob(
+            prefManager.getChannelsForRecording(), sectionBeginTime);
+        this.recordingJob_.start();
+        this.messageManager_.issueMessage('Now recording.');
+      }, this);
 
-      // Possibly inform the media record manager to make the section possibly
-      // have a begin time.
-      this.recordingJob_.start();
-      this.messageManager_.issueMessage('Now recording.');
+       // Play a short beep countdown before starting to record.
+      var count = 3;
+      var countdown = goog.bind(function() {
+        if (count > 0) {
+          this.audioContextManager_.playBeep();
+          count--;
+          goog. global.setTimeout(countdown, 1000);
+        } else {
+          startRecording();
+        }
+      }, this);
+      countdown();
     }
   }
 };
