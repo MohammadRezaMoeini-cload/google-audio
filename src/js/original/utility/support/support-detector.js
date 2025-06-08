@@ -76,7 +76,7 @@ audioCat.utility.support.SupportDetector = function(domHelper) {
           function(constraints, successCb, errorCb) {
             navigator['mediaDevices'].getUserMedia(constraints).then(
                 successCb, errorCb);
-          } : null);
+          }: null);
   /**
    * Whether getUserMedia is supported.
    * @private {boolean}
