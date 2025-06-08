@@ -36,7 +36,8 @@ audioCat.action.record.ToggleDefaultRecordAction = function(
     mediaRecordManager,
     playManager,
     messageManager,
-    prefManager) {
+    prefManager,
+    audioContextManager) {
   goog.base(this);
   /**
    * @private {!audioCat.audio.record.MediaRecordManager}
@@ -58,6 +59,13 @@ audioCat.action.record.ToggleDefaultRecordAction = function(
    */
   this.prefManager_ = prefManager;
 
+    /**
+   * Manages the audio context so it can be resumed when the user clicks the
+   * record button.
+   * @private {!audioCat.audio.AudioContextManager}
+   */
+  this.audioContextManager_ = audioContextManager;
+
   /**
    * The current recording job. Null if not recording.
    * @private {audioCat.audio.record.RecordingJob}
@@ -73,6 +81,9 @@ audioCat.action.record.ToggleDefaultRecordAction.prototype.doAction =
   var mediaRecordManager = this.mediaRecordManager_;
   var playManager = this.playManager_;
   var prefManager = this.prefManager_;
+  // Resuming the audio context here ensures Chrome allows sound playback as
+  // part of the user's click on the record button.
+  this.audioContextManager_.resume();
   if (mediaRecordManager.getDefaultRecordingReadyState()) {
     // Only record if we're ready to do so.
     if (this.recordingJob_) {
